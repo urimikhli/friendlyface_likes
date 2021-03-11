@@ -13,19 +13,19 @@ RSpec.describe "/likes", type: :request do
 
   describe "GET /popular" do
     it "renders a successful response" do
-      get popular_likes_url, as: :json
+      get popular_likes_path, as: :json
       expect(response).to be_successful
     end
   end
   describe "GET /fan" do
     it "renders a successful response" do
-      get fan_likes_url, as: :json
+      get fan_likes_path, as: :json
       expect(response).to be_successful
     end
   end
   describe "GET /week" do
     it "renders a successful response" do
-      get week_likes_url, as: :json
+      get week_likes_path, as: :json
       expect(response).to be_successful
     end
   end
