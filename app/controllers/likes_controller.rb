@@ -8,15 +8,15 @@ class LikesController < ApplicationController
     render json: @likes
   end
 
-  def popular
+  def popular_posts
     render json: Like.popular_posts
   end
 
-  def fan
+  def biggest_fans
     render json: Like.biggest_fans
   end
 
-  def week
+  def popular_days
   end
 
   # GET /likes/1

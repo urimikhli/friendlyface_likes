@@ -32,25 +32,25 @@ RSpec.describe "/likes", type: :request do
     end
   end
 
-  describe "GET /popular" do
+  describe "GET /popular_posts" do
     it "renders a successful response" do
-      get popular_likes_path, as: :json
+      get popular_posts_likes_path, as: :json
       expect(response).to be_successful
       expect(response.body).to match(a_string_including("[{\"1\":4},{\"2\":2},{\"3\":2},{\"4\":2}]"))
     end
   end
 
-  describe "GET /fan" do
+  describe "GET /biggest_fans" do
     it "renders a successful response" do
-      get fan_likes_path, as: :json
+      get biggest_fans_likes_path, as: :json
       expect(response).to be_successful
       expect(response.body).to match(a_string_including("[{\"lane\":4},{\"jane\":3},{\"georg\":2},{\"bob\":1}]"))
     end
   end
 
-  pending "GET /week" do
+  pending "GET /popular_days" do
     skip "renders a successful response" do
-      get week_likes_path, as: :json
+      get popular_days_likes_path, as: :json
       expect(response).to be_successful
       expect(response.body).to match(a_string_including("TODO"))
     end
