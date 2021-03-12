@@ -9,15 +9,11 @@ class LikesController < ApplicationController
   end
 
   def popular
-    popular_posts = Like.group(:postId).order(count_all: :desc).count.map { |k, v| [{k => v}] }.map{|x|x.first}
-
-    render json: popular_posts
+    render json: Like.popular_posts
   end
 
   def fan
-    biggest_fans = Like.group(:user).order(count_all: :desc).count.map { |k, v| [{k => v}] }.map{|x|x.first}
-
-    render json: biggest_fans
+    render json: Like.biggest_fans
   end
 
   def week
