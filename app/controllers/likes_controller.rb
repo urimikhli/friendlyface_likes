@@ -17,6 +17,7 @@ class LikesController < ApplicationController
   end
 
   def popular_days
+    render json: Like.popular_days
   end
 
   # GET /likes/1

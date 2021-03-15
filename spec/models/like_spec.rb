@@ -11,7 +11,7 @@ RSpec.describe Like, type: :model do
       expect(Like).to respond_to(:biggest_fans)
     end
 
-    pending "should respond to popular_days method" do
+    it "should respond to popular_days method" do
       expect(Like).to respond_to(:popular_days)
     end
 

@@ -5,16 +5,16 @@ RSpec.describe "/likes", type: :request do
 
   before :each do
     #create a set fixure of likes so we can test the aggregation in the response
-    FactoryBot.create(:like, postId:4, user: 'bob')
-    FactoryBot.create(:like, postId:1, user: 'jane')
-    FactoryBot.create(:like, postId:2, user: 'jane')
-    FactoryBot.create(:like, postId:4, user: 'jane')
-    FactoryBot.create(:like, postId:1, user: 'georg')
-    FactoryBot.create(:like, postId:3, user: 'georg')
-    FactoryBot.create(:like, postId:1, user: 'lane')
-    FactoryBot.create(:like, postId:2, user: 'lane')
-    FactoryBot.create(:like, postId:3, user: 'lane')
-    FactoryBot.create(:like, postId:1, user: 'lane')
+    FactoryBot.create(:like, postId:4, user: 'bob', date: Date.new(2015,1,1))
+    FactoryBot.create(:like, postId:1, user: 'jane', date: Date.new(2015,1,1))
+    FactoryBot.create(:like, postId:2, user: 'jane', date: Date.new(2015,1,8))
+    FactoryBot.create(:like, postId:4, user: 'jane', date: Date.new(2015,1,15))
+    FactoryBot.create(:like, postId:1, user: 'georg', date: Date.new(2015,1,2))
+    FactoryBot.create(:like, postId:3, user: 'georg', date: Date.new(2015,1,9))
+    FactoryBot.create(:like, postId:1, user: 'lane', date: Date.new(2015,1,2))
+    FactoryBot.create(:like, postId:2, user: 'lane', date: Date.new(2015,1,13))
+    FactoryBot.create(:like, postId:3, user: 'lane', date: Date.new(2015,1,11))
+    FactoryBot.create(:like, postId:1, user: 'lane', date: Date.new(2015,1,20))
     #
     #popular
     #[{1=>4}, {2=>2}, {3=>2}, {4=>2}]
@@ -22,6 +22,8 @@ RSpec.describe "/likes", type: :request do
     #fan
     #[{"lane"=>4}, {"jane"=>3}, {"georg"=>2}, {"bob"=>1}]
     #JSON:  "[{\"lane\":4},{\"jane\":3},{\"georg\":2},{\"bob\":1}]"
+    #week
+    #JSON: "[[\"Thursday\",4],[\"Friday\",3],[\"Tuesday\",2],[\"Sunday\",1],[\"Saturday\",0],[\"Wednesday\",0],[\"Monday\",0]]"
   end
 
   #index might be useful so kep around
@@ -48,11 +50,11 @@ RSpec.describe "/likes", type: :request do
     end
   end
 
-  pending "GET /popular_days" do
-    skip "renders a successful response" do
+  describe "GET /popular_days" do
+    it "renders a successful response" do
       get popular_days_likes_path, as: :json
       expect(response).to be_successful
-      expect(response.body).to match(a_string_including("TODO"))
+      expect(response.body).to match(a_string_including("[[\"Thursday\",4],[\"Friday\",3],[\"Tuesday\",2],[\"Sunday\",1],[\"Saturday\",0],[\"Wednesday\",0],[\"Monday\",0]]"))
     end
   end
 end
