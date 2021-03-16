@@ -23,7 +23,8 @@ RSpec.describe "/likes", type: :request do
     #[{"lane"=>4}, {"jane"=>3}, {"georg"=>2}, {"bob"=>1}]
     #JSON:  "[{\"lane\":4},{\"jane\":3},{\"georg\":2},{\"bob\":1}]"
     #week
-    #JSON: "[[\"Thursday\",4],[\"Friday\",3],[\"Tuesday\",2],[\"Sunday\",1],[\"Saturday\",0],[\"Wednesday\",0],[\"Monday\",0]]"
+    #[{"Thursday"=>4}, {"Friday"=>3}, {"Tuesday"=>2}, {"Sunday"=>1}, {"Saturday"=>0}, {"Wednesday"=>0}, {"Monday"=>0}]
+    #JSON: "[{\"Thursday\":4},{\"Friday\":3},{\"Tuesday\":2},{\"Sunday\":1},{\"Saturday\":0},{\"Wednesday\":0},{\"Monday\":0}]"
   end
 
   #index might be useful so kep around
@@ -54,7 +55,7 @@ RSpec.describe "/likes", type: :request do
     it "renders a successful response" do
       get popular_days_likes_path, as: :json
       expect(response).to be_successful
-      expect(response.body).to match(a_string_including("[[\"Thursday\",4],[\"Friday\",3],[\"Tuesday\",2],[\"Sunday\",1],[\"Saturday\",0],[\"Wednesday\",0],[\"Monday\",0]]"))
+      expect(response.body).to match(a_string_including("[{\"Thursday\":4},{\"Friday\":3},{\"Tuesday\":2},{\"Sunday\":1},{\"Saturday\":0},{\"Wednesday\":0},{\"Monday\":0}]"))
     end
   end
 end

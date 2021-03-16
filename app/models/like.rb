@@ -19,6 +19,7 @@ class Like < ApplicationRecord
             "Friday"    => 0,
             "Saturday"  => 0,
         }
+        sorted_days=[]
 
         all_days = Like.group_by_day(:date).count
         all_days.keys.map{|x|
@@ -31,6 +32,10 @@ class Like < ApplicationRecord
             likes_of_the_week[name] += like.values.first
         end
 
-        return likes_of_the_week.sort_by{ |k,v| v }.reverse! # most popular first
+        #[{},{}]
+        likes_of_the_week.keys.map{|x| 
+             sorted_days.push({x=>likes_of_the_week[x]})
+        }
+        return sorted_days.sort_by!(&:values).reverse!
     end
 end
