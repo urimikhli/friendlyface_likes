@@ -47,4 +47,36 @@ legit social media platform.
 ## Write Instructions Below:
 * Make sure to also leave a sample woring url for every endpoint you implement
 
+##  API Doc
+
+### Requests
+
+- popular posts: `/liks/popular_posts`
+- biggest fans:  `/liks/biggest_fans`
+- popular days of the week:  `/liks/popular_days`
+
+### Response json
+- popular posts: In descending order of popularity(number_of_likes): `[ {:postId => number_of_likes}, {...} ]`
+
+  e.g.`[{1=>4}, {2=>2}, {3=>2}, {4=>2}]`
+
+- biggest fans: In descending order of total number of likes per fan: `[ {:user => number_of_likes}, {...} ]`
+
+  e.g. `[{"lane"=>4}, {"jane"=>3}, {"georg"=>2}, {"bob"=>1}]`
+
+- popular days of the week: In descending order of total number of likes per day of the week: `[ {:DayOfWeek => number_of_likes}, {...} ]`
+
+  e.g. `[{"Thursday"=>4}, {"Friday"=>3}, {"Tuesday"=>2}, {"Sunday"=>1}, {"Saturday"=>0}, {"Wednesday"=>0}, {"Monday"=>0}`
+
+
+### Notes
+
+- Tried to use jsonapi(https://jsonapi.org/) so it can be self documenting. I got it working, but it wouldn't format to the jsonapi standard and I gave up.
+
+- I'm Using a simple rake task to inject the generic csv. This ideally should be done via an API call to the (imaginary) friendlyface api. Something like(w/o auth for now) `/poster/:id/likes/` and have it be ready to consume and save the csv response to the DB.
+
+- I went with simple for the excercise so didnt add a Poster model. To make this more real I would Add a Poster model so that we can explicitly show our 'like' aggregation data for a specific poster. Something like `/poster/:id/likes/popular_posts`
+
+- Ignored Auth for the purpose of the excercise 
+
 
