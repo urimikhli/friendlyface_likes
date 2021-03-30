@@ -54,7 +54,6 @@ class Like < ApplicationRecord
         #puts "days_with_likes",days_with_likes
         #assumes days_with_likes is already sorted by date
         days_with_likes.map.with_index do |day, index|
-
             if (index == 0)
                 next #skip to 2nd record
             end

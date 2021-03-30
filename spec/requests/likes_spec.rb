@@ -7,13 +7,13 @@ RSpec.describe "/likes", type: :request do
     #create a set fixure of likes so we can test the aggregation in the response
     FactoryBot.create(:like, postId:4, user: 'bob', date: Date.new(2015,1,1))
     FactoryBot.create(:like, postId:1, user: 'jane', date: Date.new(2015,1,1))
-    FactoryBot.create(:like, postId:2, user: 'jane', date: Date.new(2015,1,8))
-    FactoryBot.create(:like, postId:4, user: 'jane', date: Date.new(2015,1,15))
     FactoryBot.create(:like, postId:1, user: 'georg', date: Date.new(2015,1,2))
-    FactoryBot.create(:like, postId:3, user: 'georg', date: Date.new(2015,1,9))
     FactoryBot.create(:like, postId:1, user: 'lane', date: Date.new(2015,1,2))
-    FactoryBot.create(:like, postId:2, user: 'lane', date: Date.new(2015,1,13))
+    FactoryBot.create(:like, postId:2, user: 'jane', date: Date.new(2015,1,8))
+    FactoryBot.create(:like, postId:3, user: 'georg', date: Date.new(2015,1,9))
     FactoryBot.create(:like, postId:3, user: 'lane', date: Date.new(2015,1,11))
+    FactoryBot.create(:like, postId:2, user: 'lane', date: Date.new(2015,1,13))
+    FactoryBot.create(:like, postId:4, user: 'jane', date: Date.new(2015,1,15))
     FactoryBot.create(:like, postId:1, user: 'lane', date: Date.new(2015,1,20))
     #
     #popular
@@ -25,6 +25,14 @@ RSpec.describe "/likes", type: :request do
     #week
     #[{"Thursday"=>4}, {"Friday"=>3}, {"Tuesday"=>2}, {"Sunday"=>1}, {"Saturday"=>0}, {"Wednesday"=>0}, {"Monday"=>0}]
     #JSON: "[{\"Thursday\":4},{\"Friday\":3},{\"Tuesday\":2},{\"Sunday\":1},{\"Saturday\":0},{\"Wednesday\":0},{\"Monday\":0}]"
+    #streaks
+    # sorted on streakcount
+    # [ { dates: [streakdates],
+    #     streakcount: num
+    #   }, ...
+    # ]
+    #[{\"streakcount\":3,\"dates\":[\"2015-01-02\",\"2015-01-08\",\"2015-01-09\",\"2015-01-10\"]},{\"streakcount\":2,\"dates\":[\"2015-02-08\",\"2015-02-09\",\"2015-02-10\"]}]
+
   end
 
   #index might be useful so kep around
@@ -59,11 +67,20 @@ RSpec.describe "/likes", type: :request do
     end
   end
 
-    describe "GET /like_streaks" do
+  describe "GET /like_streaks" do
+    #show streak 
+    before :each do
+      FactoryBot.create(:like, postId:2, date: Date.new(2015,2,8))
+      FactoryBot.create(:like, postId:2, date: Date.new(2015,2,9))
+      FactoryBot.create(:like, postId:2, date: Date.new(2015,2,9))
+      FactoryBot.create(:like, postId:2, date: Date.new(2015,2,10))
+      FactoryBot.create(:like, postId:2, date: Date.new(2015,2,10))
+      FactoryBot.create(:like, postId:2, date: Date.new(2015,2,10))
+    end
     it "renders a successful response" do
       get like_streaks_likes_path, as: :json
       expect(response).to be_successful
-      expect(response.body).to match(a_string_including("hfgdgfe"))
+      expect(response.body).to match(a_string_including("[{\"streakcount\":2,\"dates\":[\"2015-02-08\",\"2015-02-09\",\"2015-02-10\"]}]"))
     end
   end
 end
