@@ -15,6 +15,9 @@ RSpec.describe Like, type: :model do
       expect(Like).to respond_to(:popular_days)
     end
 
+    it "should respond to like_streak method" do
+      expect(Like).to respond_to(:like_streaks)
+    end
 
   end
 end

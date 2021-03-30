@@ -14,5 +14,9 @@ RSpec.describe LikesController, type: :routing do
     it "routes to popular_days" do
       expect(get: "/likes/popular_days").to route_to("likes#popular_days")
     end
+
+    it "routes to like_streaks" do
+      expect(get: "/likes/like_streaks").to route_to("likes#like_streaks")
+    end
   end
 end

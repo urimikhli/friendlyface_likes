@@ -58,4 +58,12 @@ RSpec.describe "/likes", type: :request do
       expect(response.body).to match(a_string_including("[{\"Thursday\":4},{\"Friday\":3},{\"Tuesday\":2},{\"Sunday\":1},{\"Saturday\":0},{\"Wednesday\":0},{\"Monday\":0}]"))
     end
   end
+
+    describe "GET /like_streaks" do
+    it "renders a successful response" do
+      get like_streaks_likes_path, as: :json
+      expect(response).to be_successful
+      expect(response.body).to match(a_string_including("hfgdgfe"))
+    end
+  end
 end

@@ -20,6 +20,11 @@ class LikesController < ApplicationController
     render json: Like.popular_days
   end
 
+  def like_streaks
+    render json: Like.like_streaks
+  end
+
+
   # GET /likes/1
   def show
     render json: @like

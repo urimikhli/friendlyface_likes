@@ -38,4 +38,53 @@ class Like < ApplicationRecord
         }
         return sorted_days.sort_by!(&:values).reverse!
     end
+
+    def self.like_streaks
+        days_with_likes=[]
+        streakdays = []
+        streakcount = 0
+        streaks = []
+
+        all_days = Like.group_by_day(:date).count
+        all_days.keys.map{|x|
+            if (all_days[x] > 0)
+                days_with_likes.push({x=>all_days[x]})
+            end
+        }
+        #puts "days_with_likes",days_with_likes
+        #assumes days_with_likes is already sorted by date
+        days_with_likes.map.with_index do |day, index|
+
+            if (index == 0)
+                next #skip to 2nd record
+            end
+            #check for more likes day over day
+            #previous_day = i - 1
+            if ( day.values.first > days_with_likes[index - 1].values.first )
+                streakcount += 1
+                streakdays.push( days_with_likes[index-1].keys.first ) if streakcount == 1
+                streakdays.push( day.keys.first )
+            else
+                if (streakcount > 0)
+                    streaks.push({
+                        streakcount: streakcount,
+                        dates: streakdays,
+                    })
+                end
+               streakcount = 0
+               streakdays = []
+            end
+
+        end
+        #account for last record.
+        if (streakcount > 0)
+            streaks.push({
+                streakcount: streakcount,
+                dates: streakdays,
+            })
+        end
+
+        #sort on streakcount
+        streaks.sort_by{|x| x[:streakcount]}.reverse
+    end
 end
